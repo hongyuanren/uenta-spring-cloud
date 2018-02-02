@@ -1,3 +1,14 @@
+spring:
+  rabbitmq:
+    host: rabbitmq
+  sleuth:
+    sampler:
+      percentage: 1
+    integration:
+      enabled: false
+    scheduled:
+      skip-pattern: "^org.*HystrixStreamTask$"
+
 eureka:
   instance:
     hostname: registry
@@ -17,17 +28,6 @@ hystrix:
 ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000
-
-spring:
-  rabbitmq:
-    host: rabbitmq
-  sleuth:
-    sampler:
-      percentage: 1
-    integration:
-      enabled: false
-    scheduled:
-      skip-pattern: "^org.*HystrixStreamTask$"
 
 authserver:
     hostname: auth-service

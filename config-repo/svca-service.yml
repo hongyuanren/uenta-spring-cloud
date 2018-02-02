@@ -1,8 +1,6 @@
 server:
   port: 7074
 
-name: zhangxd
-
 eureka:
   instance:
     metadata-map:

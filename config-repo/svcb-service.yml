@@ -1,6 +1,6 @@
 server:
   port: 7075
-  
+
 msg: Hello
 
 eureka:
