@@ -1,6 +1,12 @@
 spring:
   rabbitmq:
     host: rabbitmq
+#    port: 15672
+#    addresses: 
+    username: guest
+    password: guest
+#    virtualhost: 
+#    dynamic: 
   sleuth:
     sampler:
       percentage: 1
