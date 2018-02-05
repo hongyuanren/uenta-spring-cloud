@@ -1,21 +1,24 @@
 server:
-  port: 7075
-
-msg: Hello
+  port: 7074
 
 eureka:
   instance:
+    hostname: registry
+    prefer-ip-address: true
     metadata-map:
       user.name: ${security.user.name}
       user.password: ${security.user.password}
+  client:
+    service-url:
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@registry:7070/eureka/
 
 security:
   user:
     name: user
-    password: password
+    password: ${CONFIG_SERVER_PASSWORD:password}
   oauth2:
     client:
-      clientId: svcb-service
+      clientId: svca-service
       clientSecret: ${security.user.password}
       accessTokenUri: http://${authserver.hostname}:${authserver.port}${authserver.contextPath}/oauth/token
       grant-type: client_credentials
