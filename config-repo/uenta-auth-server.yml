@@ -1,0 +1,52 @@
+spring:
+#  rabbitmq:
+#    host: 192.168.0.164
+##    port: 15672
+##    addresses: 
+#    username: guest
+#    password: guest
+##    virtualhost: 
+##    dynamic: 
+  data:
+    mongodb:
+      host: 192.168.0.164
+      username: user
+      password: ${MONGODB_PASSWORD:password}
+      database: piggymetrics
+      port: 25000
+#  datasource:
+#    platform: h2
+#    url: jdbc:h2:mem:user
+#    driver-class-name: org.h2.Driver
+#    schema: classpath:schema.sql
+#    data: classpath:data.sql
+#  jpa:
+#    generate-ddl: false
+#    show-sql: true
+#     hibernate:
+#       ddl-aut0: none
+
+server:
+  context-path: /uaa
+  port: 8551
+  address: 0.0.0.0
+
+management:
+  security:
+    enabled: false
+  context-path: /mgmt
+   
+#eureka:
+#  instance:
+#    hostname: 192.168.0.164
+#    prefer-ip-address: true
+##    health-check-url-path: ${server.context-path}${management.context-path}/health
+##    status-page-url-path: ${server.context-path}${management.context-path}/info
+#    metadata-map:
+#      user.name: user
+#      user.password: ${CONFIG_SERVER_PASSWORD:password}
+##      management.context-path: ${server.context-path}${management.context-path}
+#  client:
+#    service-url:
+#      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@192.168.0.164:7070/eureka/
+       
