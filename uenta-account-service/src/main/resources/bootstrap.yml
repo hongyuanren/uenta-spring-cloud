@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: uenta-account-service
+  cloud:
+    config:
+      uri: http://192.168.0.164:7072
+      fail-fast: true
+      password: ${CONFIG_SERVICE_PASSWORD:password}
+      username: user
+#      uri: http://config:7072
+#      name: uenta-account-service           #配置名称
+#      profile: dev                 #最后定向到文件：uenta-account-service-dev.[properties|yml|
+#      fail-fast: true
+#      username: user
+#      password: ${CONFIG_SERVER_PASSWORD:password}
+#      retry:
+#        initial-interval: 2000
+#        max-interval: 10000
+#        multiplier: 2
+#        max-attempts: 10
