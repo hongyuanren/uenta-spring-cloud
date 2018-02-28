@@ -1,0 +1,255 @@
+version: '2.1'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+#    restart: always
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry-1a:
+    build: uenta-registry-server
+    environment:
+      - REGISTRY_SERVER_PASSWORD=$REGISTRY_SERVER_PASSWORD
+      - spring.profiles.active=ha-east-1a
+    image: uenta-spring-cloud/uenta-registry-server
+#    restart: always
+#    depends_on:
+#      config:
+#        condition: service_healthy
+    ports:
+      - "7070:7070"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+
+  registry-1b:
+    build: uenta-registry-server
+    environment:
+      - REGISTRY_SERVER_PASSWORD=$REGISTRY_SERVER_PASSWORD
+      - spring.profiles.active=ha-east-1b
+    image: uenta-spring-cloud/uenta-registry-server
+#    restart: always
+#    depends_on:
+#      config:
+#        condition: service_healthy
+    ports:
+      - "7071:7071"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+
+  config:
+    build: uenta-config-server
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: uenta-spring-cloud/uenta-config-server
+#    restart: always
+    ports:
+      - "7072:7072"
+#      - "8888:8888"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+
+  gateway:
+    build: uenta-gateway-server
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: uenta-spring-cloud/uenta-gateway-server
+#    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - "7073:7073"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+
+  auth-service:
+    build: uenta-auth-server
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: uenta-spring-cloud/uenta-auth-server
+#    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    ports:
+      - "8551:8551"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+
+#  auth-mongodb:
+#    build: mongodb
+#    environment:
+#      MONGODB_PASSWORD: $MONGODB_PASSWORD
+#    image: uenta-spring-cloud/piggymetrics-mongodb
+##    restart: always
+#    logging:
+#      options:
+#        max-size: "10m"
+#        max-file: "10"
+#    ports:
+#      - "25000:27017"
+
+  account-service:
+    build: uenta-account-service
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: uenta-spring-cloud/uenta-account-service
+    ports:
+      - "6000:6000"
+#    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+      
+#  account-mongodb:
+#    build: mongodb
+#    environment:
+#      INIT_DUMP: account-service-dump.js
+#      MONGODB_PASSWORD: $MONGODB_PASSWORD
+#    image: uenta-spring-cloud/piggymetrics-mongodb
+##    restart: always
+#    logging:
+#      options:
+#        max-size: "10m"
+#        max-file: "10"
+#    ports:
+#      - "26000:27017"
+
+  statistics-service:
+    build: uenta-statistics-service
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+    image: uenta-spring-cloud/uenta-statistics-service
+    ports:
+      - "7000:7000"
+#    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+      
+#  statistics-mongodb:
+#    build: mongodb
+#    environment:
+#      MONGODB_PASSWORD: $MONGODB_PASSWORD
+#    image: uenta-spring-cloud/piggymetrics-mongodb
+#    ports:
+#      - "27000:27017"
+##    restart: always
+#    logging:
+#      options:
+#        max-size: "10m"
+#        max-file: "10"
+        
+  notification-service:
+    build: uenta-notification-service
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: uenta-spring-cloud/uenta-notification-service
+    ports:
+      - "8000:8000"
+#    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+        
+#  notification-mongodb:
+#    build: mongodb
+#    image: uenta-spring-cloud/piggymetrics-mongodb
+#    ports:
+#      - "28000:27017"
+##    restart: always
+#    environment:
+#      MONGODB_PASSWORD: $MONGODB_PASSWORD
+#    logging:
+#      options:
+#        max-size: "10m"
+#        max-file: "10"
+
+  monitor:
+    build: uenta-monitor-server
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: uenta-spring-cloud/uenta-monitor-server
+#    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    ports:
+      - "7080:7080"
+    volumes:
+      - /home/nin/workspace/logs:/home/nin/workspace/logs
+
+#  zipkin:
+#    build: uenta-zipkin-server
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+#    image: uenta-spring-cloud/uenta-zipkin-server
+##    restart: always
+#    depends_on:
+#      config:
+#        condition: service_healthy
+#    logging:
+#      options:
+#        max-size: "10m"
+#        max-file: "10"
+#    ports:
+#      - "9411:9411"
+#    volumes:
+#      - /home/nin/workspace/logs:/home/nin/workspace/logs
