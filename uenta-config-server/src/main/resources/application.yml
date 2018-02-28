@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: uenta-config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+     active: native
+#        git:
+#          uri: https://github.com/hongyuanren/uenta-spring-cloud.git
+#          search-paths: config-repo
+#        health:
+#          repositories:
+#            a-foo: 
+#              label: config-label-v2.0
+#              name: microservice-foo
+#              profiles: dev
+  rabbitmq:
+    host: 192.168.0.164
+#    port: 15672
+#    addresses: 
+    username: guest
+    password: guest
+#    virtualhost: 
+#    dynamic: 
+
+server:
+  port: 7072
+  address: 0.0.0.0
+
+eureka:
+  instance:
+    hostname: 192.168.0.164
+    prefer-ip-address: true
+#    health-check-url-path: ${server.context-path}${management.context-path}/health
+#    status-page-url-path: ${server.context-path}${management.context-path}/info
+#    metadata-map:
+#      user.name: ${security.user.name}
+#      user.password: ${security.user.password}
+#      management.context-path: ${server.context-path}${management.context-path}
+  client:
+    serviceUrl:
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@192.168.0.164:7070/eureka/
+
+security:
+  basic: 
+    enabled: true
+  user:
+    name: user
+    password: ${CONFIG_SERVER_PASSWORD:password}
