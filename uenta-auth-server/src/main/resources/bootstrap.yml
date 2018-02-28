@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: uenta-auth-server
+  cloud:
+    config:                        #配置服务器
+      uri: http://192.168.0.164:7072
+      fail-fast: true
+      password: ${CONFIG_SERVICE_PASSWORD:password}
+      username: user
+#      uri: http://config:7072
+#      name: uenta-auth-server           #配置名称
+#      profile: dev                 #最后定向到文件：uenta-auth-server-dev.[properties|yml|
+#      fail-fast: true
+#      username: user
+#      password: ${CONFIG_SERVER_PASSWORD:password}
+#      retry:
+#        initial-interval: 2000
+#        max-interval: 10000
+#        multiplier: 2
+#        max-attempts: 10
+#      discovery:
+#        enabled: true                    # 表示使用服务发现的configserver配置，而不是自己配置的Config Server的uri，默认false
+#        service-id: uenta-config-server  # 指定Config Server在服务发现中的serviceId，默认是configserver
