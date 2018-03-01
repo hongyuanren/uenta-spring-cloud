@@ -7,7 +7,7 @@ MAINTAINER nin "nin@XXXXXXX.com"
 # ENV APP_NAME @project.build.finalName@.@project.packaging@
 # ENV APP_VERSION @project.version@
 
-EXPOSE 8000
+EXPOSE 7070
 
 # USER
 #USER user:group
