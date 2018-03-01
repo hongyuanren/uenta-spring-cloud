@@ -34,10 +34,10 @@ spring:
       database: piggymetrics
       port: 28000
   mail:
-    host: smtp.uenta.com
+    host: smtp.google.com
     port: 465
-    username: nin@uenta.com
-    password: rhy12345
+    username: nin@google.com
+    password: ***********
     properties:
       mail:
         smtp:
