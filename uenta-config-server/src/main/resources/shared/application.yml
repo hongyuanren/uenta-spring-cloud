@@ -1,6 +1,6 @@
 spring:
   rabbitmq:
-    host: 192.168.0.164
+    host: ${RABBITMQ_HOSTNAME_EAST_1A:192.168.0.164}
 #    port: 15672
 #    addresses: 
     username: guest
@@ -33,7 +33,7 @@ hystrix:
 
 eureka:
   instance:
-    hostname: 192.168.0.164
+    hostname: ${REGISTRY_HOSTNAME_EAST_1A:192.168.0.164}
     prefer-ip-address: true
 #    health-check-url-path: ${server.context-path}${management.context-path}/health
 #    status-page-url-path: ${server.context-path}${management.context-path}/info
@@ -43,11 +43,11 @@ eureka:
 #      management.context-path: ${server.context-path}${management.context-path}
   client:
     serviceUrl:
-      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@192.168.0.164:7070/eureka/
+      defaultZone: http://${REGISTRY_SERVER_USER:user}:${REGISTRY_SERVER_PASSWORD:password}@${REGISTRY_HOSTNAME_EAST_1A:192.168.0.164}:7000/eureka/
 
 authserver:
-  hostname: 192.168.0.164
-  port: 8551
+  hostname: ${AUTH_HOSTNAME_EAST_1A:192.168.0.164}
+  port: 7050
   contextPath: /uaa
 
 security:

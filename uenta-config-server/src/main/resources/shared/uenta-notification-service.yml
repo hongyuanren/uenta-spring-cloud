@@ -2,14 +2,14 @@ security:
   oauth2:
     client:
       clientId: uenta-notification-service
-      clientSecret: ${NOTIFICATION_SERVICE_PASSWORD:password}
-      accessTokenUri: http://192.168.0.164:8551/uaa/oauth/token
+      clientSecret: ${NOTIFICATION_SERVER_PASSWORD:password}
+      accessTokenUri: http://${AUTH_HOSTNAME_EAST_1A:192.168.0.164}:7050/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 
 server:
   context-path: /notifications
-  port: 8000
+  port: 7070
   address: 0.0.0.0
 
 remind:
@@ -28,16 +28,16 @@ backup:
 spring:
   data:
     mongodb:
-      host: 192.168.0.164
-      username: user
-      password: ${MONGODB_PASSWORD:password}
+      host: ${MONGODB_NOTIFICATION_HOSTNAME:192.168.0.164}
+      username: ${NOTIFICATION_SERVER_USER:user}
+      password: ${NOTIFICATION_SERVER_PASSWORD:password}
       database: piggymetrics
       port: 28000
   mail:
-    host: smtp.google.com
+    host: smtp.uenta.com
     port: 465
-    username: nin@google.com
-    password: ***********
+    username: nin@uenta.com
+    password: rehy12345
     properties:
       mail:
         smtp:

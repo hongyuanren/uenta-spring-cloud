@@ -1,18 +1,8 @@
-#spring:
-#  rabbitmq:
-#    host: 192.168.0.164
-##    port: 15672
-##    addresses: 
-#    username: guest
-#    password: guest
-##    virtualhost: 
-##    dynamic: 
-
 server:
-  port: 9411
+  port: 7040
   address: 0.0.0.0
 
 security:
   user:
-    name: user
+    name: ${ZIPKIN_SERVER_USER:user}
     password: ${ZIPKIN_SERVER_PASSWORD:password}

@@ -3,22 +3,22 @@ security:
     client:
       clientId: uenta-account-service
       clientSecret: ${ACCOUNT_SERVICE_PASSWORD:password}
-      accessTokenUri: http://192.168.0.164:8551/uaa/oauth/token
+      accessTokenUri: http://${AUTH_HOSTNAME_EAST_1A:192.168.0.164}:7050/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 
 spring:
   data:
     mongodb:
-      host: 192.168.0.164
-      username: user
-      password: ${MONGODB_PASSWORD:password}
+      host: ${MONGODB_ACCOUNT_HOSTNAME:192.168.0.164}
+      username: ${MONGODB_SERVER_USER:user}
+      password: ${MONGODB_SERVER_PASSWORD:password}
       database: piggymetrics
       port: 26000
 
 server:
   context-path: /accounts
-  port: 6000
+  port: 7060
   address: 0.0.0.0
 
 feign:

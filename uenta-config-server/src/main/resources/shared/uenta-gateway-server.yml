@@ -20,7 +20,7 @@ zuul:
     auth-service:
       path: /uaa/**
       serviceId: uenta-auth-server
-      url: http://192.168.0.164:8551
+      url: http://${AUTH_HOSTNAME_EAST_1A:192.168.0.164}:7050
       stripPrefix: false
       sensitiveHeaders:
 
@@ -41,44 +41,11 @@ zuul:
       serviceId: uenta-notification-service
       stripPrefix: false
       sensitiveHeaders:
-
-#    svca-service:
-#      path: /svca/**
-#       serviceId: svca-service
-#       stripPrefix: false
-#      sensitiveHeaders:
-
-#    svcb-service:
-#      path: /svcb/**
-#       serviceId: svca-service
-#       stripPrefix: false
-#      sensitiveHeaders:
               
 server:
-  port: 7073
-  address: 0.0.0.0           
-            
-#spring:
-#  rabbitmq:
-#    host: 192.168.0.164
-##    port: 15672
-##    addresses: 
-#    username: guest
-#    password: guest
-##    virtualhost: 
-##    dynamic: 
+  port: 7020
+  address: 0.0.0.0
 
 #management:
 #  security:
 #    enabled: false
-
-#eureka:
-#  instance:
-#    hostname: 192.168.0.164
-#    prefer-ip-address: true
-#    metadata-map:
-#      user.name: user
-#      user.password: ${REGISTRY_SERVER_PASSWORD:password}
-#  client:
-#    service-url:
-#      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@192.168.0.164:7070/eureka/

@@ -18,7 +18,7 @@ spring:
 #              name: microservice-foo
 #              profiles: dev
   rabbitmq:
-    host: 192.168.0.164
+    host: ${RABBITMQ_HOSTNAME_EAST_1A:192.168.0.164}
 #    port: 15672
 #    addresses: 
     username: guest
@@ -27,12 +27,12 @@ spring:
 #    dynamic: 
 
 server:
-  port: 7072
+  port: 7010
   address: 0.0.0.0
 
 eureka:
   instance:
-    hostname: 192.168.0.164
+    hostname: ${REGISTRY_HOSTNAME_EAST_1A:192.168.0.164}
     prefer-ip-address: true
 #    health-check-url-path: ${server.context-path}${management.context-path}/health
 #    status-page-url-path: ${server.context-path}${management.context-path}/info
@@ -42,11 +42,11 @@ eureka:
 #      management.context-path: ${server.context-path}${management.context-path}
   client:
     serviceUrl:
-      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@192.168.0.164:7070/eureka/
+      defaultZone: http://${REGISTRY_SERVER_USER:user}:${REGISTRY_SERVER_PASSWORD:password}@${REGISTRY_HOSTNAME_EAST_1A:192.168.0.164}:7000/eureka/
 
 security:
   basic: 
     enabled: true
   user:
-    name: user
+    name: ${CONFIG_SERVER_USER:user}
     password: ${CONFIG_SERVER_PASSWORD:password}

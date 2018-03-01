@@ -1,17 +1,9 @@
 spring:
-#  rabbitmq:
-#    host: 192.168.0.164
-##    port: 15672
-##    addresses: 
-#    username: guest
-#    password: guest
-##    virtualhost: 
-##    dynamic: 
   data:
     mongodb:
-      host: 192.168.0.164
-      username: user
-      password: ${MONGODB_PASSWORD:password}
+      host: ${MONGODB_AUTH_HOSTNAME:192.168.0.164}
+      username: ${MONGODB_SERVER_USER:user}
+      password: ${MONGODB_SERVER_PASSWORD:password}
       database: piggymetrics
       port: 25000
 #  datasource:
@@ -28,25 +20,10 @@ spring:
 
 server:
   context-path: /uaa
-  port: 8551
+  port: 7050
   address: 0.0.0.0
 
 management:
   security:
     enabled: false
   context-path: /mgmt
-   
-#eureka:
-#  instance:
-#    hostname: 192.168.0.164
-#    prefer-ip-address: true
-##    health-check-url-path: ${server.context-path}${management.context-path}/health
-##    status-page-url-path: ${server.context-path}${management.context-path}/info
-#    metadata-map:
-#      user.name: user
-#      user.password: ${CONFIG_SERVER_PASSWORD:password}
-##      management.context-path: ${server.context-path}${management.context-path}
-#  client:
-#    service-url:
-#      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@192.168.0.164:7070/eureka/
-       
