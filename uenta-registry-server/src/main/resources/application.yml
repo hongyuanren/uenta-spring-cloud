@@ -1,23 +1,31 @@
 spring:
   application:
     name: uenta-registry-server
+  rabbitmq:
+    host: ${RABBITMQ_HOSTNAME_EAST_1A:192.168.0.164}
+#    port: 15672
+#    addresses: 
+    username: guest
+    password: guest
+#    virtualhost: 
+#    dynamic: 
+
 ---
 spring:
   # 指定profile=ha-east-1a
   profiles: ha-east-1a
 
 server:
-  port: 7070
+  port: 7000
   address: 0.0.0.0
 
 eureka:
   server:
-# EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
 #    enableSelfPreservation: false #设为false , 关闭自我保护
 #    evictionIntervalTimerInMs: 4000 # 清理间隔（单位毫秒，默认是60*1000）
   instance:
     # 指定当profile=ha-east-1a时，主机名是master
-    hostname: 192.168.0.164
+    hostname: ${REGISTRY_HOSTNAME_EAST_1A:192.168.0.164}
     prefer-ip-address: true
     metadata-map:
       instanceId: ${spring.application.name}:${random.value}
@@ -30,7 +38,7 @@ eureka:
       waitTimeInMsWhenSyncEmpty: 0
     serviceUrl:
       # 将自己注册到backup这个eureka上面去
-      defaultZone: http://${security.user.name}:${security.user.password}@192.168.0.164:7071/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@${REGISTRY_HOSTNAME_EAST_1B:192.168.0.164}:7001/eureka/
     healthcheck: #只应该在application.yml中设置。如果设置在bootstrap.yml中将会导致一些不良的副作用，例如在Eureka中注册的应用名称是UNKNOWN等。
       enabled: true
 
@@ -38,7 +46,7 @@ security:
   basic:
     enabled: true               # 开启基于HTTP basic的认证
   user:
-    name: user                  # 配置登录的账号是user
+    name: ${REGISTRY_SERVER_USER:user}                  # 配置登录的账号是user
     password: ${REGISTRY_SERVER_PASSWORD:password}       # 配置登录的密码是password
 
 ---
@@ -47,7 +55,7 @@ spring:
   profiles: ha-east-1b
 
 server:
-  port: 7071
+  port: 7001
   address: 0.0.0.0
 
 eureka:
@@ -56,7 +64,7 @@ eureka:
 #    evictionIntervalTimerInMs: 4000 # 清理间隔（单位毫秒，默认是60*1000）
   instance:
     # 指定当profile=ha-east-1b时，主机名是backup
-    hostname: 192.168.0.164
+    hostname: ${REGISTRY_HOSTNAME_EAST_1B:192.168.0.164}
     prefer-ip-address: true
     metadata-map:
       instanceId: ${spring.application.name}:${random.value}
@@ -68,7 +76,7 @@ eureka:
     server:
       waitTimeInMsWhenSyncEmpty: 0
     serviceUrl:
-      defaultZone: http://${security.user.name}:${security.user.password}@192.168.0.164:7070/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@${REGISTRY_HOSTNAME_EAST_1A:192.168.0.164}:7000/eureka/
     healthcheck: #只应该在application.yml中设置。如果设置在bootstrap.yml中将会导致一些不良的副作用，例如在Eureka中注册的应用名称是UNKNOWN等。
       enabled: true
 
@@ -76,5 +84,6 @@ security:
   basic:
     enabled: true               # 开启基于HTTP basic的认证
   user:
-    name: user                  # 配置登录的账号是user
+    name: ${REGISTRY_SERVER_USER:user}                   # 配置登录的账号是user
     password: ${REGISTRY_SERVER_PASSWORD:password}       # 配置登录的密码是password
+
