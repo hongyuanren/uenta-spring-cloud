@@ -23,15 +23,102 @@
 
 # 应用架构
 
-该项目包含 8 个服务
+该项目包含 9 个服务
 
-uenta-account-service - 帐户服务
-uenta-auth-server - OAuth2 认证服务
-uenta-config-server - 外部配置
-uenta-gateway-server - 代理所有微服务的接口网关
-uenta-monitor-server - 监控
-uenta-notification-service - 通知服务
-uenta-registry-server  - 服务注册与发现
-uenta-statistics-service - 统计服务
-uenta-zipkin-server - 分布式跟踪
+* uenta-account-service - 帐户服务
+* uenta-auth-server - OAuth2 认证服务
+* uenta-config-server - 外部配置
+* uenta-gateway-server - 代理所有微服务的接口网关
+* uenta-monitor-server - 监控
+* uenta-notification-service - 通知服务
+* uenta-registry-server  - 服务注册与发现
+* uenta-statistics-service - 统计服务
+* uenta-zipkin-server - 分布式跟踪
+
+## 体系架构
+
+
+## 应用组件
+
+# 环境设定
+
+## 环境变量
+
+Linux
+```
+export CONFIG_SERVICE_PASSWORD=password
+export REGISTRY_SERVER_PASSWORD=password
+export ACCOUNT_SERVICE_PASSWORD=password
+export MONGODB_PASSWORD=password
+export MONITOR_SERVER_PASSWORD=password
+export NOTIFICATION_SERVICE_PASSWORD=password
+export STATISTICS_SERVICE_PASSWORD=password
+export ZIPKIN_SERVER_PASSWORD=password
+```
+
+Windows
+```
+set CONFIG_SERVICE_PASSWORD=password
+set REGISTRY_SERVER_PASSWORD=password
+set ACCOUNT_SERVICE_PASSWORD=password
+set MONGODB_PASSWORD=password
+set MONITOR_SERVER_PASSWORD=password
+set NOTIFICATION_SERVICE_PASSWORD=password
+set STATISTICS_SERVICE_PASSWORD=password
+set ZIPKIN_SERVER_PASSWORD=password
+```
+
+
+# 启动项目
+
+* 使用 Docker 快速启动
+    1. 配置 Docker 环境
+    2. `mvn clean package` 打包项目及 Docker 镜像
+    3. 在项目根目录下执行 `docker-compose up -d` 启动所有项目
+* 本地手动启动
+
+
+
+
+# 项目预览
+
+## 注册中心
+* http://localhost:7000/ 默认账号 user，密码 password
+* http://localhost:7001/ 默认账号 user，密码 password
+
+
+
+## 监控
+
+
+## 链路跟踪
+
+## RabbitMQ 监控
+Docker 启动访问 http://localhost:15672/ 默认账号 guest，密码 guest（本地 rabbit 管理系统默认端口15672）
+
+
+# 接口测试
+
+
+
+
+
+
+
+**源码下载**
+[https://github.com/hongyuanren/uenta-spring-cloud.git](https://github.com/hongyuanren/uenta-spring-cloud.git)
+
+
+# Contact
+
+ - 作者：任洪远 
+ - 出处：https://www.uenta.com
+ - Email：
+ - 版权归作者所有，转载请注明出处
+ - Wechat：关注公众号，大连优恩特科技有限公司，专注于企业系统开发与技术研究
+
+
+
+
+
 
