@@ -1,0 +1,25 @@
+spring:
+  boot:
+    admin:
+      routes:
+        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        location: http://${MONITOR_HOSTNAME_EAST_1A:192.168.0.164}:${turbine.stream.port}
+
+logging:
+  level:
+    org.springframework.cloud.netflix.zuul.filters.post.SendErrorFilter: error
+
+server:
+  port: 7030
+  address: 0.0.0.0
+
+turbine:
+  stream:
+    port: 7039
+
+security:
+  user:
+    name: ${MONITOR_SERVER_USER:user}
+    password: ${MONITOR_SERVER_PASSWORD:password}

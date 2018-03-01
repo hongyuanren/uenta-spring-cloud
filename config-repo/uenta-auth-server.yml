@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      host: ${MONGODB_AUTH_HOSTNAME:192.168.0.164}
+      username: ${MONGODB_SERVER_USER:user}
+      password: ${MONGODB_SERVER_PASSWORD:password}
+      database: piggymetrics
+      port: 25000
+#  datasource:
+#    platform: h2
+#    url: jdbc:h2:mem:user
+#    driver-class-name: org.h2.Driver
+#    schema: classpath:schema.sql
+#    data: classpath:data.sql
+#  jpa:
+#    generate-ddl: false
+#    show-sql: true
+#     hibernate:
+#       ddl-aut0: none
+
+server:
+  context-path: /uaa
+  port: 7050
+  address: 0.0.0.0
+
+management:
+  security:
+    enabled: false
+  context-path: /mgmt

@@ -1,0 +1,26 @@
+security:
+  oauth2:
+    client:
+      clientId: uenta-account-service
+      clientSecret: ${ACCOUNT_SERVICE_PASSWORD:password}
+      accessTokenUri: http://${AUTH_HOSTNAME_EAST_1A:192.168.0.164}:7050/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGODB_ACCOUNT_HOSTNAME:192.168.0.164}
+      username: ${MONGODB_SERVER_USER:user}
+      password: ${MONGODB_SERVER_PASSWORD:password}
+      database: piggymetrics
+      port: 26000
+
+server:
+  context-path: /accounts
+  port: 7060
+  address: 0.0.0.0
+
+feign:
+  hystrix:
+    enabled: true

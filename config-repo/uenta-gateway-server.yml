@@ -1,0 +1,51 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+            
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+
+  routes:
+    auth-service:
+      path: /uaa/**
+      serviceId: uenta-auth-server
+      url: http://${AUTH_HOSTNAME_EAST_1A:192.168.0.164}:7050
+      stripPrefix: false
+      sensitiveHeaders:
+
+    account-service:
+      path: /accounts/**
+      serviceId: uenta-account-service
+      stripPrefix: false
+      sensitiveHeaders:
+
+    statistics-service:
+      path: /statistics/**
+      serviceId: uenta-statistics-service
+      stripPrefix: false
+      sensitiveHeaders:
+
+    notification-service:
+      path: /notifications/**
+      serviceId: uenta-notification-service
+      stripPrefix: false
+      sensitiveHeaders:
+              
+server:
+  port: 7020
+  address: 0.0.0.0
+
+#management:
+#  security:
+#    enabled: false
