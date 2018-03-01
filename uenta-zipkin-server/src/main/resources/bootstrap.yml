@@ -3,10 +3,10 @@ spring:
     name: uenta-zipkin-server
   cloud:
     config:
-      uri: http://192.168.0.164:7072
+      uri: http://${CONFIG_HOSTNAME_EAST_1A:192.168.0.164}:7010
       fail-fast: true
-      password: ${CONFIG_SERVICE_PASSWORD:password}
-      username: user
+      password: ${CONFIG_SERVER_PASSWORD:password}
+      username: ${CONFIG_SERVER_USER:user}
 #      uri: http://config:7072
 #      name: uenta-zipkin-server           #配置名称
 #      profile: dev                 #最后定向到文件：uenta-zipkin-server-dev.[properties|yml|
